@@ -60,9 +60,33 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def init[A](l: List[A]): List[A] = ???
 
-  def length[A](l: List[A]): Int = ???
+  def length[A](l: List[A]): Int = foldRight(l, 0: Int)((_, acc) => 1 + acc)
 
-  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
+  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = {
+    l match {
+      case Nil => z
+      case Cons(h, t) => foldLeft(t, f(z, h))(f)
+    }
+  }
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
+
+  // 3.12
+
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, Nil: List[A])((acc, cur) => Cons(cur, acc))
+
+  val xx = List(1,2,3,4,5) match {
+    case Cons(x, Cons(2, Cons(4, _))) => x
+    case Nil => 42
+    case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
+    case Cons(h, t) => h + sum(t)
+    case _ => 101
+  }
+
+  val yy = foldRight(List(1,2,3), Nil: List[Int])(Cons(_, _))
+
+  def main(args: Array[String]): Unit = {
+    println(reverse(List(1,2,3,4,5,6,7,8)))
+  }
 }

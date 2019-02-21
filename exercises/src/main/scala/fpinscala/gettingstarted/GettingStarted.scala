@@ -36,7 +36,7 @@ object MyModule {
 
   // Exercise 1: Write a function to compute the nth fibonacci number
 
-  def fib(n: Int): Int = ???
+  def fib(n: Int): Int = if (n <= 2) 1 else fib(n - 1) + fib(n - 2)
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
